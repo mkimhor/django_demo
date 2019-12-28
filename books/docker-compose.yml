@@ -1,0 +1,23 @@
+version: "3.7"
+services:
+  web:
+    build: .
+    command: python /code/manage.py runserver 0.0.0.0:8000
+    environment:
+      - SECRET_KEY=y%84dk9t*79g34&@2uhdz2+t^5#8&7af(*(c!5k_40av9q_@ve
+      - DEBUG=1
+      - STRIPE_TEST_PUBLISHABLE_KEY=pk_test_cPycwrHrEHAQm6l896ve8QHr00uo0Pck0r
+      - STRIPE_TEST_SECRET_KEY=sk_test_zcNts8NWIMChgQ3nZYunzxav00VT3ipLyn
+      - ENVIRONMENT=development
+    volumes:
+      - .:/code
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+  db:
+    image: postgres:11
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+volumes:
+  postgres_data:
